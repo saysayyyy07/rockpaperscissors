@@ -1,6 +1,3 @@
-const HUMAN_SELECTION = getHumanChoice();
-const COMPUTER_SELECTION = getComputerChoice()
-
 
 function getComputerChoice() {
     let randomNumber = Math.random()
@@ -15,49 +12,45 @@ function getComputerChoice() {
 
 
 function getHumanChoice() {
-    humanChoice = prompt("What is your move? (rock, paper or scissors)").toLowerCase();
-    return humanChoice
+    return prompt("What is your move? (rock, paper or scissors)").toLowerCase() 
 }
 
     
 
 function playRound(computerChoice, humanChoice) {
+
     if (computerChoice == "scissors") {
         if (humanChoice == "paper") {
-            console.log("You lose. Scissors beats Paper.")
             return "computerWins"
         } else if (humanChoice == "rock") {
-            console.log("You win! Rock beats Scissors.")
             return "humanWins"
         } else if (humanChoice == "scissors") {
-        console.log("It's a tie. Scissors ignores Scissors. No points awarded.")
+        return "roundTie"
         } else {
         console.log("invalid input. try again")
         }
 
     } else if (computerChoice == "paper") {
         if (humanChoice == "scissors") {
-            console.log("You win! Scissors beats Paper.")
             return "humanWins"
         } else if (humanChoice == "rock") {
-            console.log("You lose. Paper beats Rock.")
             return "computerWins"
         } else if (humanChoice == "paper") {
-        console.log("It's a tie. Paper ignores Paper. No points awarded.")
+        return "roundTie"
         } else {
         console.log("invalid input. try again")
         }
     } else if (computerChoice == "rock") {
         if (humanChoice == "paper") {
-            console.log("You win! Paper beats Rock.")
             return "humanWins"
         } else if (humanChoice == "scissors") {
-            console.log("You lose. Rock beats Scissors.")
             return "computerWins"
         } else if (humanChoice == "rock") {
-        console.log("It's a tie. Rock ignores Rock. No points awarded.")
+            return "roundTie"
         } else {
-        console.log("invalid input. try again")
+            console.log("invalid input. try again")
+            return "error: invalid input"
+        
         }
     } else {
         console.log("Something's gone wrong. Try refreshing, and try again.")
@@ -65,30 +58,46 @@ function playRound(computerChoice, humanChoice) {
 }
 
 
-function playGame(computerSelection, humanSelection) {
+function playGame() {
     let humanScore = 0;
     let computerScore = 0;
-
-
+    
+    
     for (i = 1; i <= 5; i++) {
-        playRound(computerSelection, humanSelection)
-        if (playRound() == "computerWins") {
-            computerScore++
-        } else if (playRound() == "humanWins") {
-            humanScore++
+        let computerChoice = getComputerChoice();
+        let humanChoice = getHumanChoice();
+
+        let roundOutcome = playRound(computerChoice, humanChoice);
+
+        if (roundOutcome == "computerWins") {
+            computerScore += 1
+            console.log(`You lose. ${computerChoice} beats ${humanChoice}`)
+        } else if (roundOutcome == "humanWins") {
+            humanScore += 1
+            console.log(`You win! ${humanChoice} beats ${computerChoice}`)
+        } else if (roundOutcome == "roundTie") {
+            console.log(`It's a tie! ${humanChoice} ignores ${computerChoice}. Scores remain the same.`)
+        } else {
+            i -= 1
         }
+
+
         console.log(`The current score is Computer: ${computerScore} and You: ${humanScore}`)
     }
 
     if (computerScore > humanScore) {
         console.log(`The final winner is the Computer (boooo). 
-        Computer: ${computerScore} and You: ${humanScore} `)
-    } else {
+        Computer: ${computerScore} and You: ${humanScore}`)
+    } else if (computerScore < humanScore) {
         console.log(`The final winner is You!!! (yayyyyy). 
-        Computer: ${computerScore} and You: ${humanScore} `)
+        Computer: ${computerScore} and You: ${humanScore}`)
+    } else {
+        console.log("The final result is a tie! Play again soon!")
     }
 }
 
 
-playGame(COMPUTER_SELECTION, HUMAN_SELECTION);
+playGame();
+
+
 

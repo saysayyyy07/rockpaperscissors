@@ -84,21 +84,42 @@ function determineWinner(humanChoice) {
     } else {
         console.log("PANIC!! UNKNOWN MATCHUP")
     }
-    displayCurrentResults();
+    displayRoundResults();
+    displayGameResults();
 }
 
 
 const displayResults = document.createElement("div");
 container.appendChild(displayResults);
 
-function displayCurrentResults() {
+function displayRoundResults() {
     displayResults.textContent = `The current score is Computer: ${computerScore} Human (you!): ${humanScore}`;
 }
 
+function displayGameResults() {
+    if (humanScore == 5) {
+        gameResults.textContent = `Congratulations! You are the winner! You beat the computer by ${humanScore - computerScore} point(s)!`
+        humanScore = 0;
+        computerScore = 0;
+        setTimeout(clearGameResults, 5000)
+
+    } else if (computerScore == 5) {
+        gameResults.textContent = `Unlucky! You are the loser. You lost to the computer by ${computerScore - humanScore} point(s) hahah`
+        humanScore = 0;
+        computerScore = 0;
+        setTimeout(clearGameResults, 5000)
+    }
+}
+
 const currentRound = document.createElement("div");
-container.appendChild(currentRound)
+container.appendChild(currentRound);
 
+const gameResults = document.createElement("h2");
+container.appendChild(gameResults);
 
+function clearGameResults() {
+    gameResults.textContent = ""
+}
 
 
 
